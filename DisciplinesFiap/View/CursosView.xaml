@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="DisciplinesFiap.CursosView"
+		Title="Cursos">
+
+	<StackLayout>
+		<SearchBar TextChanged="Handle_TextChanged" Placeholder="Procure um curso..." />
+		<ListView>
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<TextCell Text="teste" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</StackLayout>
+	
+</ContentPage>

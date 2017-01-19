@@ -11,5 +11,10 @@ namespace DisciplinesFiap
 		{
 			InitializeComponent();
 		}
+
+		void OnLogin_Clicked(object sender, System.EventArgs e)
+		{
+			Navigation.PushAsync(new CursosView());
+		}
 	}
 }

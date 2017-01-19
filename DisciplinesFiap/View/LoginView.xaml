@@ -8,6 +8,6 @@
     <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
       <Entry Placeholder="Usuário" />
       <Entry Placeholder="Senha" IsPassword="True" />
-      <Button Text="Entrar" />
+      <Button Text="Entrar" Clicked="OnLogin_Clicked" />
     </StackLayout>
 </ContentPage>
