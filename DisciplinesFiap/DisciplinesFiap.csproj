@@ -45,6 +45,9 @@
     <EmbeddedResource Include="View\CursosView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\CursoDetalheView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -73,6 +76,9 @@
     <Compile Include="ViewModel\CursoService.cs" />
     <Compile Include="View\CursosView.xaml.cs">
       <DependentUpon>CursosView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CursoDetalheView.xaml.cs">
+      <DependentUpon>CursoDetalheView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

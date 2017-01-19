@@ -65,7 +65,7 @@ namespace DisciplinesFiap
 
 		public Curso GetCurso(int userId)
 		{
-			return _cursos.SingleOrDefault(c => c.Id == userId.ToString());
+			return _cursos.Single(c => c.Id == userId.ToString());
 		}
 
 		public List<Curso> GetAllCurso()
@@ -79,6 +79,11 @@ namespace DisciplinesFiap
 				return _cursos;
 
 			return _cursos.Where(c => c.Titulo.StartsWith(filtro, StringComparison.CurrentCultureIgnoreCase)).ToList();
+		}
+
+		public List<Disciplina> DisciplinasPorModulo(Modulo modulo)
+		{
+			return modulo.Disciplinas;
 		}
 	}
 }

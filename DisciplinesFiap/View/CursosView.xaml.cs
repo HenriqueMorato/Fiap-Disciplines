@@ -25,7 +25,14 @@ namespace DisciplinesFiap
 
 		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
 		{
-			throw new NotImplementedException();
+			if (e.SelectedItem == null)
+				return;
+
+			var selecaoCurso = e.SelectedItem as Curso;
+
+			listView.SelectedItem = null;
+
+			Navigation.PushAsync(new CursoDetalheView(int.Parse(selecaoCurso.Id)));
 		}
 
 		//Dispositivos android com back button
