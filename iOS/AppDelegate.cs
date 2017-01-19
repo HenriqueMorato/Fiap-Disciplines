@@ -4,6 +4,8 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace DisciplinesFiap.iOS
 {
@@ -13,6 +15,10 @@ namespace DisciplinesFiap.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
+
+			//UINavigationBar.Appearance.TintColor = Color.Black.ToUIColor();
+			//TODO tirar status bar ios e android
+			//UIApplication.SharedApplication.StatusBarHidden = true;
 
 			LoadApplication(new App());
 

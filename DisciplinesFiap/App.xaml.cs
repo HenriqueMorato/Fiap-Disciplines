@@ -8,7 +8,7 @@ namespace DisciplinesFiap
 		{
 			InitializeComponent();
 
-			MainPage = new DisciplinesFiapPage();
+			MainPage = new MainPageView();
 		}
 
 		protected override void OnStart()
