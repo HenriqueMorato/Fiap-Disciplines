@@ -72,5 +72,13 @@ namespace DisciplinesFiap
 		{
 			return _cursos;
 		}
+
+		public List<Curso> BuscaCursoPorNome(string filtro = null)
+		{
+			if (String.IsNullOrWhiteSpace(filtro))
+				return _cursos;
+
+			return _cursos.Where(c => c.Titulo.StartsWith(filtro, StringComparison.CurrentCultureIgnoreCase)).ToList();
+		}
 	}
 }

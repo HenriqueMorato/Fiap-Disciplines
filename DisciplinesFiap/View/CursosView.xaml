@@ -7,10 +7,10 @@
 
 	<StackLayout>
 		<SearchBar TextChanged="Handle_TextChanged" Placeholder="Procure um curso..." />
-		<ListView>
+		<ListView x:Name="listView" ItemSelected="Handle_ItemSelected">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="teste" />
+					<TextCell Text="{Binding Titulo}" />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
