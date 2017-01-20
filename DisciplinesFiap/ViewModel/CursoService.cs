@@ -7,7 +7,7 @@ namespace DisciplinesFiap
 	public class CursoService
 	{
 		#region modulos
-		private static List<Modulo> _modulos = new List<Modulo>
+		private static List<Modulo> _modulos1 = new List<Modulo>
 		{
 			new Modulo
 			{
@@ -17,9 +17,13 @@ namespace DisciplinesFiap
 				Ordem = 1,
 				Disciplinas =  new List<Disciplina>
 				{
-					new Disciplina { Id = "1", Descricao = "teste", Conteudo = "teste"}
+					new Disciplina { Id = "1", Descricao = "teste 1", Conteudo = "teste"}
 				}
-			},
+			}
+		};
+
+		private static List<Modulo> _modulos2 = new List<Modulo>
+		{
 			new Modulo
 			{
 				Id = "2",
@@ -28,7 +32,7 @@ namespace DisciplinesFiap
 				Ordem = 1,
 				Disciplinas =  new List<Disciplina>
 				{
-					new Disciplina { Id = "1", Descricao = "teste", Conteudo = "teste"}
+					new Disciplina { Id = "1", Descricao = "teste 2", Conteudo = "teste"}
 				}
 			}
 		};
@@ -46,7 +50,7 @@ namespace DisciplinesFiap
 				Dias = "ter e qui",
 				Horario = "19:00 - 20:00",
 				Investimento = "R$ 1000,00",
-				Modulos = _modulos
+				Modulos = _modulos1
 			},
 			new Curso
 			{
@@ -58,7 +62,7 @@ namespace DisciplinesFiap
 				Dias = "ter e qui",
 				Horario = "19:00 - 20:00",
 				Investimento = "R$ 1000,00",
-				Modulos = _modulos
+				Modulos = _modulos2
 			}
 		};
 		#endregion

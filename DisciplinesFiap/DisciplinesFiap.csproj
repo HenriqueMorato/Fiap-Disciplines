@@ -80,6 +80,7 @@
     <Compile Include="View\CursoDetalheView.xaml.cs">
       <DependentUpon>CursoDetalheView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\GroupedDisciplines.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
