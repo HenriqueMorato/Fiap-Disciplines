@@ -5,12 +5,26 @@
 		x:Class="DisciplinesFiap.CursosView"
 		Title="Cursos">
 
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Novo Curso" Clicked="AdicionarCurso_Clicked" />
+	</ContentPage.ToolbarItems>
 	<StackLayout>
 		<SearchBar TextChanged="Handle_TextChanged" Placeholder="Procure um curso..." />
 		<ListView x:Name="listView" ItemSelected="Handle_ItemSelected">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Titulo}" />
+					<TextCell Text="{Binding Titulo}">
+						<TextCell.ContextActions>
+							<MenuItem Text="Editar" 
+									IsDestructive="false"
+									Clicked="Editar_Clicked" 
+								    CommandParameter="{Binding .}" />
+							<MenuItem Text="Deletar" 
+									IsDestructive="true"
+									Clicked="Deletar_Clicked"
+									CommandParameter="{Binding .}" />
+						</TextCell.ContextActions>
+					</TextCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

@@ -48,6 +48,9 @@
     <EmbeddedResource Include="View\CursoDetalheView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\EditarCursoView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -81,6 +84,9 @@
       <DependentUpon>CursoDetalheView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\GroupedDisciplines.cs" />
+    <Compile Include="View\EditarCursoView.xaml.cs">
+      <DependentUpon>EditarCursoView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

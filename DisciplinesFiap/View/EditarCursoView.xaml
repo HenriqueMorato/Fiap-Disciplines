@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		x:Class="DisciplinesFiap.EditarCursoView">
+
+	<TableView Intent="Form">
+		<TableRoot>
+			<TableSection Title="Informações Básicas">
+				<EntryCell Label="Título" Text="{Binding Titulo}" Keyboard="Default"/>
+				<EntryCell Label="Local" Text="{Binding Local}" Keyboard="Default"/>
+			</TableSection>
+			<TableSection Title="Duração do Curso">
+				<!--<ViewCell>
+					<StackLayout Orientation="Horizontal" Padding="13, 0">
+						<Label Text="Data de Início" VerticalOptions="Center" />
+						<DatePicker Date="{Binding Inicio}" Format="dd MM yy" HorizontalOptions="EndAndExpand"/>
+					</StackLayout>	
+				</ViewCell>-->
+				<EntryCell Label="Data de Início" Text="{Binding Inicio}" Keyboard="Text" />
+				<EntryCell Label="Duração em Dias" Text="{Binding Duracao}" Keyboard="Numeric" />
+				<EntryCell Label="Dias da semana" Text="{Binding Dias}" Keyboard="Text" />
+				<EntryCell Label="Horário" Text="{Binding Horario, StringFormat='{0:C}'}" Keyboard="Text" />
+			</TableSection>
+			<TableSection Title="Valores">
+				<EntryCell Label="Investimento" Text="{Binding Investimento}" Keyboard="Numeric" />
+			</TableSection>
+			<TableSection>
+				<ViewCell>
+					<Button Text="Save" Clicked="Save_Clicked" />
+				</ViewCell>
+			</TableSection>
+		</TableRoot>
+	</TableView>
+	
+</ContentPage>

@@ -15,6 +15,7 @@ namespace DisciplinesFiap
 
 			NavigationPage.SetHasBackButton(this, false);
 
+			BindingContext = _cursoService.GetAllCurso();
 			listView.ItemsSource = _cursoService.GetAllCurso();
 		}
 
@@ -35,7 +36,24 @@ namespace DisciplinesFiap
 			Navigation.PushAsync(new CursoDetalheView(int.Parse(selecaoCurso.Id)));
 		}
 
-		//Dispositivos android com back button
+		async void AdicionarCurso_Clicked(object sender, System.EventArgs e)
+		{
+			var page = new EditarCursoView(new Curso());
+
+			await Navigation.PushAsync(page);
+		}
+
+		void Editar_Clicked(object sender, System.EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		void Deletar_Clicked(object sender, System.EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		//Desabilitar back button dispositivos android
 		protected override bool OnBackButtonPressed()
 		{
 			return true;
