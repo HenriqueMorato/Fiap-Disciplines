@@ -9,8 +9,8 @@
 		<ToolbarItem Text="Novo Curso" Clicked="AdicionarCurso_Clicked" />
 	</ContentPage.ToolbarItems>
 	<StackLayout>
-		<SearchBar TextChanged="Handle_TextChanged" Placeholder="Procure um curso..." />
-		<ListView x:Name="listView" ItemSelected="Handle_ItemSelected">
+		<SearchBar TextChanged="Busca_TextChanged" Placeholder="Procure um curso..." />
+		<ListView x:Name="listView" ItemSelected="Curso_ItemSelected">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<TextCell Text="{Binding Titulo}">

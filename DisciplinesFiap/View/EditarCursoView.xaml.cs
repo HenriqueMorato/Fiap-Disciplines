@@ -30,9 +30,26 @@ namespace DisciplinesFiap
 			};
 		}
 
-		void Save_Clicked(object sender, System.EventArgs e)
+		async void Save_Clicked(object sender, System.EventArgs e)
 		{
-			throw new NotImplementedException();
+			var curso = BindingContext as Curso;
+
+			if (string.IsNullOrWhiteSpace(curso.Titulo))
+			{
+				await DisplayAlert("Erro", "Por Favor, adicione o Título", "OK");
+				return;
+			}
+
+			if (String.IsNullOrWhiteSpace(curso.Id))
+			{
+				curso.Id = "1";
+
+				CursoAdicionado?.Invoke(this, curso);
+			}
+			else
+				CursoEditado?.Invoke(this, curso);
+
+			await Navigation.PopAsync();
 		}
 	}
 }

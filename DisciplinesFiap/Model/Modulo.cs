@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DisciplinesFiap
 {
-	public class Modulo
+	public class Modulo : BaseViewModel
 	{
 		private string id;
 		//[JsonProperty(PropertyName = "id")]

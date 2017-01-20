@@ -45,7 +45,7 @@ namespace DisciplinesFiap
 				Id = "1",
 				Titulo = "Curso de Teste 1",
 				Local = "FIAP",
-				Inicio = DateTime.Now.ToString("ddMMyyyy"),
+				Inicio = DateTime.Now.ToString("dd/MM/yyyy"),
 				Duracao = "30 horas",
 				Dias = "ter e qui",
 				Horario = "19:00 - 20:00",
@@ -57,7 +57,7 @@ namespace DisciplinesFiap
 				Id = "2",
 				Titulo = "Curso de Teste 2",
 				Local = "FIAP",
-				Inicio = DateTime.Now.ToString("ddMMyyyy"),
+				Inicio = DateTime.Now.ToString("dd/MM/yyyy"),
 				Duracao = "30 horas",
 				Dias = "ter e qui",
 				Horario = "19:00 - 20:00",
@@ -88,6 +88,33 @@ namespace DisciplinesFiap
 		public List<Disciplina> DisciplinasPorModulo(Modulo modulo)
 		{
 			return modulo.Disciplinas;
+		}
+
+		public void AdicionaCurso (Curso curso)
+		{
+			_cursos.Add(curso);
+		}
+
+		public void RemoveCurso (Curso curso)
+		{
+			_cursos.Remove(curso);
+		}
+
+		public void EditarCurso (string cursoId, Curso curso)
+		{
+			Curso _curso = _cursos.Single(c => c.Id == cursoId);
+
+			_curso = new Curso
+			{
+				Id = curso.Id,
+				Titulo = curso.Titulo,
+				Local = curso.Local,
+				Inicio = curso.Inicio,
+				Duracao = curso.Duracao,
+				Dias = curso.Dias,
+				Horario = curso.Horario,
+				Investimento = curso.Investimento
+			};
 		}
 	}
 }

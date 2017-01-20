@@ -1,7 +1,7 @@
 ﻿using System;
 namespace DisciplinesFiap
 {
-	public class Disciplina
+	public class Disciplina : BaseViewModel
 	{
 		private string id;
 		//[JsonProperty(PropertyName = "id")]

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace DisciplinesFiap
 {
-	public class Curso
+	public class Curso : BaseViewModel
 	{
 		private string id;
 		//[JsonProperty(PropertyName = "id")]
@@ -13,7 +14,15 @@ namespace DisciplinesFiap
 			set { id = value; }
 		}
 
-		public string Titulo { get; set; }
+		private string _titulo;
+		public string Titulo 
+		{ 
+			get { return _titulo; }
+			set 
+			{ 
+				SetValue(ref _titulo, value); 
+			}
+		}
 		public string Local { get; set; }
 		public string Inicio { get; set; }
 		public string Duracao { get; set; }

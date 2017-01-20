@@ -87,6 +87,7 @@
     <Compile Include="View\EditarCursoView.xaml.cs">
       <DependentUpon>EditarCursoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\BaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
