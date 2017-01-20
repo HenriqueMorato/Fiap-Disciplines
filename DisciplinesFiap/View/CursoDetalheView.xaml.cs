@@ -32,26 +32,9 @@ namespace DisciplinesFiap
 		{
 			InitializeComponent();
 
-			var _curso = _service.GetCurso(cursoId);
-			_modulos = new ObservableCollection<Modulo>(_curso.Modulos);
+			_modulos = new ObservableCollection<Modulo>(_service.GetCurso(cursoId).Modulos);
 			CreateGroup();
 			listView.ItemsSource = _disciplinas;
-
-			//_disciplinas = new List<Disciplina>(_modulos.SelectMany(x => x.Disciplinas));
-			//BindingContext = _modulos;
-			//var dataTemplate = new DataTemplate(typeof(TextCell));
-			//dataTemplate.SetBinding(TextCell.TextProperty, "Modulos.Descricao");
-
-
-			//var listView = new ListView()
-			//{
-			//	//IsGroupingEnabled = true,
-			//	GroupDisplayBinding = new Binding("Descricao"),
-			//	ItemsSource = _disciplinas,
-			//	ItemTemplate = dataTemplate
-			//};
-
-			//Content = listView;
 		}
 	}
 }
