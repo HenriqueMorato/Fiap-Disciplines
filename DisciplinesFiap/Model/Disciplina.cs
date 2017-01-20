@@ -11,7 +11,12 @@ namespace DisciplinesFiap
 			set { id = value; }
 		}
 
-		public string Descricao { get; set; }
+		private string _descricao;
+		public string Descricao 
+		{ 
+			get { return _descricao; } 
+			set { SetValue(ref _descricao, value); }
+		}
 		public string Conteudo { get; set; }
 	}
 }

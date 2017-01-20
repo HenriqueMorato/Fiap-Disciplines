@@ -5,7 +5,7 @@
 		x:Class="DisciplinesFiap.CursoDetalheView"
 		Title="{Binding Titulo}">
 
-	<ListView x:Name="listView" IsGroupingEnabled="true" GroupDisplayBinding="{Binding Descricao}">
+	<ListView x:Name="listView" IsGroupingEnabled="true" GroupDisplayBinding="{Binding Descricao}" ItemSelected="Handle_ItemSelected">
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<TextCell Text="{Binding Descricao}" />

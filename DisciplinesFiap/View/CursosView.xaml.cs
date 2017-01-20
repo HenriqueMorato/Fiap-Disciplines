@@ -49,6 +49,7 @@ namespace DisciplinesFiap
 				_cursoService.AdicionaCurso(curso);
 			};
 
+			//todo pushModal
 			await Navigation.PushAsync(page);
 		}
 
@@ -71,6 +72,7 @@ namespace DisciplinesFiap
 				_cursoService.EditarCurso(cursoSelecionado.Id, cursoSelecionado);
 			};
 
+			//todo pushModal
 			await Navigation.PushAsync(page);
 		}
 

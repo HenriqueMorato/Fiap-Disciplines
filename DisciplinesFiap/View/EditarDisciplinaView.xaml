@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="DisciplinesFiap.EditarDisciplinaView">
+
+	<TableView Intent="Form" HasUnevenRows="true">
+		<TableRoot>
+			<TableSection Title="Informações Básicas">
+				<EntryCell Label="Descrição" Text="{Binding Descricao}" Keyboard="Default"/>
+				<!--<TextCell Text="Conteúdo" />-->
+				<ViewCell>
+					<StackLayout Padding="13, 10, 13, 10">
+						<Label Text="Conteúdo" VerticalOptions="Center" />
+						<Editor Text="{Binding Conteudo}" Keyboard="Default" HeightRequest="200" />
+					</StackLayout>
+				</ViewCell>
+			</TableSection>
+
+			<TableSection>
+				<ViewCell>
+					<StackLayout VerticalOptions="End">
+						<Button Text="Save" Clicked="Save_Clicked" />
+					</StackLayout>
+				</ViewCell>
+			</TableSection>
+		</TableRoot>
+	</TableView>
+	
+</ContentPage>
