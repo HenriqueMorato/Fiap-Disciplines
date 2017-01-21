@@ -14,7 +14,7 @@
 
 			<TableSection>
 				<ViewCell>
-					<Button Text="Save" />
+					<Button Text="Save" Clicked="Save_Clicked" />
 				</ViewCell>
 			</TableSection>
 		</TableRoot>

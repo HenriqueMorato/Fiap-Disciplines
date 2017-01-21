@@ -16,8 +16,7 @@ namespace DisciplinesFiap
 			InitializeComponent();
 
 			var cursos = _service.GetCurso(cursoId);
-			_modulos = new ObservableCollection<Modulo>(cursos.Modulo);
-			_modulos.OrderBy(m => m.Ordem);
+			_modulos = new ObservableCollection<Modulo>(cursos.Modulo.OrderBy(m => m.Ordem));
 			listView.ItemsSource = _modulos;
 		}
 
@@ -32,12 +31,40 @@ namespace DisciplinesFiap
 
 			var page = new EditarModuloView(moduloSelecionado);
 
-			//page.DisciplinaEditado += (source, disciplina) =>
-			//{
-			//	disciplinaSelecionada.Id = disciplina.Id;
-			//	disciplinaSelecionada.Conteudo = disciplina.Conteudo;
-			//	disciplinaSelecionada.Descricao = disciplina.Descricao;
-			//};
+			page.ModuloEditado += (source, modulo) =>
+			{
+				moduloSelecionado.Id = modulo.Id;
+				moduloSelecionado.Descricao = modulo.Descricao;
+				moduloSelecionado.Ordem = modulo.Ordem;
+				moduloSelecionado.Carga = modulo.Carga;
+				moduloSelecionado.Disciplina = modulo.Disciplina;
+
+				//ordenar lista
+				_modulos = new ObservableCollection<Modulo>(_modulos.OrderBy(m => m.Ordem));
+				listView.ItemsSource = null;
+				listView.ItemsSource = _modulos;
+
+				//todo api modulos put
+			};
+
+			await Navigation.PushAsync(page);
+		}
+
+		async void AdicionarModulo_Clicked(object sender, System.EventArgs e)
+		{
+			var page = new EditarModuloView(new Modulo());
+
+			page.ModuloAdicionado += (source, modulo) =>
+			{
+				_modulos.Add(modulo);
+
+				//ordenar lista
+				_modulos = new ObservableCollection<Modulo>(_modulos.OrderBy(m => m.Ordem));
+				listView.ItemsSource = null;
+				listView.ItemsSource = _modulos;
+
+				//todo chamar api post
+			};
 
 			await Navigation.PushAsync(page);
 		}

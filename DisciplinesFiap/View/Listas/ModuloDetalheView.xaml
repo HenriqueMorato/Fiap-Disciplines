@@ -5,6 +5,9 @@
 		x:Class="DisciplinesFiap.ModuloDetalheView"
 		Title="{Binding Titulo}">
 
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Novo Módulo" Clicked="AdicionarModulo_Clicked" />
+	</ContentPage.ToolbarItems>
 	<ListView x:Name="listView" ItemSelected="Handle_ItemSelected">
 		<ListView.ItemTemplate>
 			<DataTemplate>
