@@ -1,25 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace DisciplinesFiap
 {
 	public partial class CursosView : ContentPage
 	{
-		private CursoService _cursoService = new CursoService();
+		private CursoService _cursoService = CursoService.getCursoService();
 		private ObservableCollection<Curso> _cursos { get; set; }
 
+        public static async Task<CursosView> Create()
+        {
+            var myClass = new CursosView();
+            await myClass.Initialize();
+            return myClass;
+        }
 
-		public CursosView()
+        private async Task Initialize()
+        {
+            _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
+            listView.ItemsSource = _cursos;
+        }
+
+        private CursosView()
 		{
 			InitializeComponent();
 
-			NavigationPage.SetHasBackButton(this, false);
-
-			_cursos = new ObservableCollection<Curso>(_cursoService.GetAllCurso());
-			//BindingContext = _cursoService.GetAllCurso();
-			listView.ItemsSource = _cursos;
+			NavigationPage.SetHasBackButton(this, false);		
 		}
 
 		void Busca_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)

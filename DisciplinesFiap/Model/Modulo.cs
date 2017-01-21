@@ -16,6 +16,6 @@ namespace DisciplinesFiap
 		public string Descricao { get; set; }
 		public string Carga { get; set; }
 		public int Ordem { get; set; }
-		public List<Disciplina> Disciplinas { get; set; }
+		public List<Disciplina> Disciplina { get; set; }
 	}
 }

@@ -6,8 +6,8 @@
 		Title="Login">
 
     <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
-      <Entry Placeholder="Usuário" />
-      <Entry Placeholder="Senha" IsPassword="True" />
+      <Entry Placeholder="Usuário" Text="{Binding Login}" />
+      <Entry Placeholder="Senha" Text="{Binding Senha}" IsPassword="True" />
       <Button Text="Entrar" Clicked="OnLogin_Clicked" />
     </StackLayout>
 </ContentPage>

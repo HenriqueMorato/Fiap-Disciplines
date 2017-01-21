@@ -8,7 +8,7 @@ namespace DisciplinesFiap
 {
 	public partial class CursoDetalheView : ContentPage
 	{
-		private CursoService _service = new CursoService();
+		private CursoService _service = CursoService.getCursoService();
 		private ObservableCollection<Modulo> _modulos { get; set; }
 
 		//private ObservableCollection<Disciplina> _disciplinas { get; set; }
@@ -18,7 +18,7 @@ namespace DisciplinesFiap
 			InitializeComponent();
 
 			var cursos = _service.GetCurso(cursoId);
-			_modulos = new ObservableCollection<Modulo>(cursos.Modulos);
+			_modulos = new ObservableCollection<Modulo>(cursos.Modulo);
 			//BindingContext = cursos;
 			listView.ItemsSource = GroupedDisciplines.CriarGrupo(_modulos);
 		}
