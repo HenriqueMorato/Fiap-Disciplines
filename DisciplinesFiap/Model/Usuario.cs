@@ -10,5 +10,11 @@ namespace DisciplinesFiap.Model
     {
         public string Login { get; set; }
         public string Senha { get; set; }
-    }
+
+		public Usuario(string login = null, string senha = null )
+		{
+			Login = login;
+			Senha = senha;
+		}
+	}
 }

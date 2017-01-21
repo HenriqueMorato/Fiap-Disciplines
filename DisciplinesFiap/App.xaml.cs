@@ -25,5 +25,28 @@ namespace DisciplinesFiap
 		{
 			// Handle when your app resumes
 		}
+
+		private const string _loginKey = "Login";
+		public string LoginKey
+		{
+			get
+			{
+				if (Properties.ContainsKey(_loginKey))
+					return Properties[_loginKey].ToString();
+
+				return "";
+			}
+			set
+			{
+				Properties[_loginKey] = value;
+			}
+		}
+
+		public static bool UsuarioAutenticado { get; set; }
+
+		public void Logout()
+		{
+			MainPage = new MainPageView();
+		}
 	}
 }
