@@ -42,6 +42,22 @@ namespace DisciplinesFiap
 			}
 		}
 
+		private const string _passwordKey = "Password";
+		public string PasswordKey
+		{
+			get
+			{
+				if (Properties.ContainsKey(_passwordKey))
+					return Properties[_passwordKey].ToString();
+
+				return "";
+			}
+			set
+			{
+				Properties[_passwordKey] = value;
+			}
+		}
+
 		public static bool UsuarioAutenticado { get; set; }
 
 		public void Logout()

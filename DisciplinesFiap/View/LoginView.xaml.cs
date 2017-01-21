@@ -16,7 +16,7 @@ namespace DisciplinesFiap
 
 			var app = Application.Current as App;
 
-			BindingContext = new Usuario(app.LoginKey);
+			BindingContext = new Usuario(app.LoginKey, app.PasswordKey);
 
 			if (!App.UsuarioAutenticado)
 				return;
@@ -60,6 +60,7 @@ namespace DisciplinesFiap
 
 			var app = Application.Current as App;
 			app.LoginKey = usuario.Login;
+			app.PasswordKey = usuario.Senha;
 			App.UsuarioAutenticado = true;
 
             await Navigation.PushAsync(await CursosView.Create());
