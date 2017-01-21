@@ -28,29 +28,22 @@ namespace DisciplinesFiap
 				Descricao = disciplina.Descricao
 			};
 
-			foreach (var m in modulos)
-				picker.Items.Add(m.Descricao);
 
-			//modulo pai da disciplina
-			//todo pensar numa query melhor
-			foreach (Modulo m in modulos)
-			{
-				foreach (Disciplina d in m.Disciplina)
-				{
-					if (d.Id == disciplina.Id)
-					{
-						picker.SelectedIndex = m.Disciplina.FindIndex(a => a.Id == d.Id);
-						break;
-					}
-				}
-			}
 
 			if (!string.IsNullOrWhiteSpace(disciplina.Id))
 				return;
 
+			foreach (var m in modulos)
+				picker.Items.Add(m.Descricao);
+
+			picker.SelectedIndex = 0;
+
 			label.IsEnabled = true;
+			label.Opacity = 100;
 			picker.IsEnabled = true;
+			picker.Opacity = 100;
 			_modulos = modulos;
+			ModuloDisciplina = _modulos[0];
 		}
 
 		async void Save_Clicked(object sender, System.EventArgs e)
