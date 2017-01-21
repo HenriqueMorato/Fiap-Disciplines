@@ -5,7 +5,10 @@
 		x:Class="DisciplinesFiap.CursoDetalheView"
 		Title="{Binding Titulo}">
 
-	<ListView x:Name="listView" IsGroupingEnabled="true" GroupDisplayBinding="{Binding Descricao}" ItemSelected="Handle_ItemSelected">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Nova Disciplina" Clicked="AdicionarDisciplina_Clicked" />
+	</ContentPage.ToolbarItems>
+	<ListView x:Name="listView" IsGroupingEnabled="true" GroupDisplayBinding="{Binding Descricao}" ItemSelected="EditarDisciplina_ItemSelected">
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<TextCell Text="{Binding Descricao}">

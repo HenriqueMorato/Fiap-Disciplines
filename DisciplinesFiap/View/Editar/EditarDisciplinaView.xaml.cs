@@ -8,6 +8,7 @@ namespace DisciplinesFiap
 	public partial class EditarDisciplinaView : ContentPage
 	{
 		public event EventHandler<Disciplina> DisciplinaEditado;
+		public event EventHandler<Disciplina> DisciplinaAdicionada;
 		//todo pensar numa forma de não ter tantas variáveis
 		private List<Modulo> _modulos;
 		public Modulo ModuloDisciplina;
@@ -33,13 +34,22 @@ namespace DisciplinesFiap
 			//modulo pai da disciplina
 			//todo pensar numa query melhor
 			foreach (Modulo m in modulos)
-				if (m.Disciplina.Contains(disciplina))
-					modulos = m;
+			{
+				foreach (Disciplina d in m.Disciplina)
+				{
+					if (d.Id == disciplina.Id)
+					{
+						picker.SelectedIndex = m.Disciplina.FindIndex(a => a.Id == d.Id);
+						break;
+					}
+				}
+			}
 
 			if (!string.IsNullOrWhiteSpace(disciplina.Id))
 				return;
 
-			StackConteudo.IsEnabled = false;
+			label.IsEnabled = true;
+			picker.IsEnabled = true;
 			_modulos = modulos;
 		}
 
@@ -53,7 +63,14 @@ namespace DisciplinesFiap
 				return;
 			}
 
-			DisciplinaEditado?.Invoke(this, disciplina);
+			if(String.IsNullOrWhiteSpace(disciplina.Id))
+			{
+				//todo conferir o id
+
+				DisciplinaAdicionada?.Invoke(this, disciplina);
+			}
+			else
+				DisciplinaEditado?.Invoke(this, disciplina);
 
 			await Navigation.PopAsync();
 		}

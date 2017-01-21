@@ -68,5 +68,17 @@ namespace DisciplinesFiap
 
 			await Navigation.PushAsync(page);
 		}
+
+		async void Deletar_Clicked(object sender, System.EventArgs e)
+		{
+			var moduloSelecionado = (sender as MenuItem).CommandParameter as Modulo;
+
+			if (await DisplayAlert("Alerta", $"Tem certeza que quer deletar o curso {moduloSelecionado.Descricao}", "Sim", "Não"))
+			{
+				_modulos.Remove(moduloSelecionado);
+
+				//todo chamar api delete;
+			}
+		}
 	}
 }

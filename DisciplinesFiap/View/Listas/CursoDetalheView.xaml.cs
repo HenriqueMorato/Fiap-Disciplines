@@ -24,7 +24,25 @@ namespace DisciplinesFiap
 			listView.ItemsSource = _disciplinas;
 		}
 
-		async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		async void AdicionarDisciplina_Clicked(object sender, System.EventArgs e)
+		{
+			var page = new EditarDisciplinaView(new Disciplina(), _modulos.ToList());
+
+			page.DisciplinaAdicionada += (source, disciplina) =>
+			{
+				//todo pensar numa query melhor
+				foreach (GroupedDisciplines dg in _disciplinas)
+				{
+					if (dg.Id == ((EditarDisciplinaView)source).ModuloDisciplina.Id)
+						dg.Add(disciplina);
+				}
+				//todo chamar api post
+			};
+
+			await Navigation.PushAsync(page);
+		}
+
+		async void EditarDisciplina_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
 		{
 			if (listView.SelectedItem == null)
 				return;
@@ -40,11 +58,7 @@ namespace DisciplinesFiap
 				disciplinaSelecionada.Conteudo = disciplina.Conteudo;
 				disciplinaSelecionada.Descricao = disciplina.Descricao;
 
-				//todo trocar o modulo pai na api
-				//if (((EditarDisciplinaView)source).ModuloNovo != null)
-				//{
-					
-				//}
+				//todo poder trocar o módulo da disciplina
 				//todo put na api
 			};
 
