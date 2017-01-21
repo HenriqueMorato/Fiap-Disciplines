@@ -29,6 +29,6 @@ namespace DisciplinesFiap
 		public string Dias { get; set; }
 		public string Horario { get; set; }
 		public string Investimento { get; set; }
-		public List<Modulo> Modulos { get; set; }
+		public List<Modulo> Modulo { get; set; }
 	}
 }

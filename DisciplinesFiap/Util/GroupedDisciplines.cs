@@ -15,7 +15,7 @@ namespace DisciplinesFiap
 			foreach (Modulo m in modulo)
 			{
 				grupo = new GroupedDisciplines() { Descricao = m.Descricao };
-				foreach (Disciplina d in modulo.SelectMany(x => x.Disciplinas))
+				foreach (Disciplina d in modulo.SelectMany(x => x.Disciplina))
 				{
 					grupo.Add(d);
 				}

@@ -1,80 +1,59 @@
-﻿using System;
+﻿using DisciplinesFiap.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DisciplinesFiap
 {
 	public class CursoService
 	{
-		#region modulos
-		private static List<Modulo> _modulos1 = new List<Modulo>
-		{
-			new Modulo
-			{
-				Id = "1",
-				Carga = "30",
-				Descricao = "Modulo de teste 1",
-				Ordem = 1,
-				Disciplinas =  new List<Disciplina>
-				{
-					new Disciplina { Id = "1", Descricao = "teste 1", Conteudo = "teste"}
-				}
-			}
-		};
+        private static HttpClient client = new HttpClient();
+        private List<Curso> _cursos;
+        private string token;
+        private static CursoService cursoService;
 
-		private static List<Modulo> _modulos2 = new List<Modulo>
-		{
-			new Modulo
-			{
-				Id = "2",
-				Carga = "30",
-				Descricao = "Modulo de teste 2",
-				Ordem = 1,
-				Disciplinas =  new List<Disciplina>
-				{
-					new Disciplina { Id = "1", Descricao = "teste 2", Conteudo = "teste"}
-				}
-			}
-		};
-		#endregion
-		#region cursos
-		private List<Curso> _cursos = new List<Curso>
-		{
-			new Curso
-			{
-				Id = "1",
-				Titulo = "Curso de Teste 1",
-				Local = "FIAP",
-				Inicio = DateTime.Now.ToString("dd/MM/yyyy"),
-				Duracao = "30 horas",
-				Dias = "ter e qui",
-				Horario = "19:00 - 20:00",
-				Investimento = "R$ 1000,00",
-				Modulos = _modulos1
-			},
-			new Curso
-			{
-				Id = "2",
-				Titulo = "Curso de Teste 2",
-				Local = "FIAP",
-				Inicio = DateTime.Now.ToString("dd/MM/yyyy"),
-				Duracao = "30 horas",
-				Dias = "ter e qui",
-				Horario = "19:00 - 20:00",
-				Investimento = "R$ 1000,00",
-				Modulos = _modulos2
-			}
-		};
-		#endregion
+        public static CursoService getCursoService()
+        {
+            if (cursoService == null)
+            {
+                cursoService = new CursoService();
+            }
+
+            return cursoService;
+        }
+        private CursoService()
+        {
+            client.BaseAddress = new Uri("http://fiapdisciplines.azurewebsites.net/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
 		public Curso GetCurso(int userId)
 		{
 			return _cursos.Single(c => c.Id == userId.ToString());
 		}
 
-		public List<Curso> GetAllCurso()
+		public async Task<List<Curso>> GetAllCurso()
 		{
-			return _cursos;
+            List<Curso> cursos = new List<Curso>();
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //client.DefaultRequestHeaders.Add("Authorization", token);
+
+            HttpResponseMessage response = await client.GetAsync("api/Curso");
+            if (response.IsSuccessStatusCode)
+            {
+                cursos = await response.Content.ReadAsAsync<List<Curso>>();
+            }
+
+            _cursos = cursos;
+
+            return _cursos;
 		}
 
 		public List<Curso> BuscaCursoPorNome(string filtro = null)
@@ -82,12 +61,12 @@ namespace DisciplinesFiap
 			if (String.IsNullOrWhiteSpace(filtro))
 				return _cursos;
 
-			return _cursos.Where(c => c.Titulo.StartsWith(filtro, StringComparison.CurrentCultureIgnoreCase)).ToList();
+			return _cursos.Where(c => c.Titulo.ToLower().Contains(filtro)).ToList();
 		}
 
 		public List<Disciplina> DisciplinasPorModulo(Modulo modulo)
 		{
-			return modulo.Disciplinas;
+			return modulo.Disciplina;
 		}
 
 		public void AdicionaCurso (Curso curso)
@@ -116,5 +95,32 @@ namespace DisciplinesFiap
 				Investimento = curso.Investimento
 			};
 		}
-	}
+
+        public async Task<bool> Autenticar(Usuario usuario)
+        {
+            //Não sei porque cazzo o método de extensão PostAsJsonAsync não rola com o Xamarin
+            //Já tinha ocorrido esse erro em outro projeto Xamarin
+            //HttpResponseMessage response = await client.PostAsJsonAsync("Autenticar", usuario);
+
+            HttpResponseMessage response = await client.PostAsync("Usuario/Autenticar", ConvertJson(usuario));
+
+            if (response.IsSuccessStatusCode)
+            {
+                token = await response.Content.ReadAsStringAsync();
+                token = token.Replace("\"", "");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static StringContent ConvertJson(object objeto)
+        {
+            string json = JsonConvert.SerializeObject(objeto);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            return stringContent;
+        }
+    }
 }
