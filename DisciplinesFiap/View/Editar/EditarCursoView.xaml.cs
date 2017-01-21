@@ -42,7 +42,8 @@ namespace DisciplinesFiap
 
 			if (String.IsNullOrWhiteSpace(curso.Id))
 			{
-				curso.Id = "1";
+				//todo conferir o Id
+				//curso.Id = "0";
 
 				CursoAdicionado?.Invoke(this, curso);
 			}

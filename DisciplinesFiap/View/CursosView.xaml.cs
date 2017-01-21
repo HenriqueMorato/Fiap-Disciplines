@@ -55,14 +55,14 @@ namespace DisciplinesFiap
 			page.CursoAdicionado += (source, curso) => 
 			{
 				_cursos.Add(curso);
+				//todo chamar api post
 				_cursoService.AdicionaCurso(curso);
 			};
 
-			//todo pushModal
 			await Navigation.PushAsync(page);
 		}
 
-		async void Editar_Clicked(object sender, System.EventArgs e)
+		async void EditarCurso_Clicked(object sender, System.EventArgs e)
 		{
 			var cursoSelecionado = (sender as MenuItem).CommandParameter as Curso;
 
@@ -78,10 +78,21 @@ namespace DisciplinesFiap
 				cursoSelecionado.Dias = curso.Dias;
 				cursoSelecionado.Horario = curso.Horario;
 				cursoSelecionado.Investimento = curso.Investimento;
+
+				//todo chamar api put
 				_cursoService.EditarCurso(cursoSelecionado.Id, cursoSelecionado);
 			};
 
-			//todo pushModal
+
+			await Navigation.PushAsync(page);
+		}
+
+		async void EditarModulo_Clicked(object sender, System.EventArgs e)
+		{
+			var cursoSelecionado = (sender as MenuItem).CommandParameter as Curso;
+
+			var page = new ModuloDetalheView(int.Parse(cursoSelecionado.Id));
+
 			await Navigation.PushAsync(page);
 		}
 
@@ -92,6 +103,8 @@ namespace DisciplinesFiap
 			if(await DisplayAlert("Alerta", $"Tem certeza que quer deletar o curso {cursoSelecionado.Titulo} ?", "Sim", "Não"))
 			{
 				_cursos.Remove(cursoSelecionado);
+
+				//todo chamar api delete
 				_cursoService.RemoveCurso(cursoSelecionado);
 			}
 		}

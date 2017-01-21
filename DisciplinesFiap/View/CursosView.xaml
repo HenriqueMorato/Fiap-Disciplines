@@ -15,10 +15,14 @@
 				<DataTemplate>
 					<TextCell Text="{Binding Titulo}">
 						<TextCell.ContextActions>
-							<MenuItem Text="Editar" 
+							<MenuItem Text="Editar Curso" 
 									IsDestructive="false"
-									Clicked="Editar_Clicked" 
+									Clicked="EditarCurso_Clicked" 
 								    CommandParameter="{Binding .}" />
+							<MenuItem Text="Editar Módulos" 
+									IsDestructive="false" 
+									Clicked="EditarModulo_Clicked"
+									CommandParameter="{Binding .}"/>
 							<MenuItem Text="Deletar" 
 									IsDestructive="true"
 									Clicked="Deletar_Clicked"

@@ -83,17 +83,14 @@ namespace DisciplinesFiap
 		{
 			Curso _curso = _cursos.Single(c => c.Id == cursoId);
 
-			_curso = new Curso
-			{
-				Id = curso.Id,
-				Titulo = curso.Titulo,
-				Local = curso.Local,
-				Inicio = curso.Inicio,
-				Duracao = curso.Duracao,
-				Dias = curso.Dias,
-				Horario = curso.Horario,
-				Investimento = curso.Investimento
-			};
+			//_curso.Id = curso.Id;
+			_curso.Titulo = curso.Titulo;
+			_curso.Local = curso.Local;
+			_curso.Inicio = curso.Inicio;
+			_curso.Duracao = curso.Duracao;
+			_curso.Dias = curso.Dias;
+			_curso.Horario = curso.Horario;
+			_curso.Investimento = curso.Investimento;
 		}
 
         public async Task<bool> Autenticar(Usuario usuario)

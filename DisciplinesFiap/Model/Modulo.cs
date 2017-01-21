@@ -13,9 +13,19 @@ namespace DisciplinesFiap
 			set { id = value; }
 		}
 
-		public string Descricao { get; set; }
+		private string _descricao;
+		public string Descricao
+		{
+			get { return _descricao; }
+			set { SetValue(ref _descricao, value); }
+		}
 		public string Carga { get; set; }
-		public int Ordem { get; set; }
+		private int _ordem;
+		public int Ordem
+		{
+			get { return _ordem; }
+			set { SetValue(ref _ordem, value); }
+		}
 		public List<Disciplina> Disciplina { get; set; }
 	}
 }
