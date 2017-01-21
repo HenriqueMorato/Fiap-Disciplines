@@ -8,7 +8,14 @@
 	<ListView x:Name="listView" IsGroupingEnabled="true" GroupDisplayBinding="{Binding Descricao}" ItemSelected="Handle_ItemSelected">
 		<ListView.ItemTemplate>
 			<DataTemplate>
-				<TextCell Text="{Binding Descricao}" />
+				<TextCell Text="{Binding Descricao}">
+					<TextCell.ContextActions>
+						<MenuItem Text="Deletar" 
+								IsDestructive="true"
+								Clicked="Deletar_Clicked"
+								CommandParameter="{Binding .}" />
+						</TextCell.ContextActions>
+				</TextCell>
 			</DataTemplate>
 		</ListView.ItemTemplate>
 	</ListView>

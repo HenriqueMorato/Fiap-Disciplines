@@ -10,9 +10,13 @@
 				<EntryCell Label="Descrição" Text="{Binding Descricao}" Keyboard="Default"/>
 				<!--<TextCell Text="Conteúdo" />-->
 				<ViewCell>
-					<StackLayout Padding="13, 10, 13, 10">
+					<StackLayout Padding="13, 10, 13, 10" x:Name="StackConteudo" IsEnabled="false">
 						<Label Text="Conteúdo" VerticalOptions="Center" />
 						<Editor Text="{Binding Conteudo}" Keyboard="Default" HeightRequest="200" />
+						<StackLayout Orientation="Horizontal" Padding="13, 0">
+							<Label Text="Módulo" VerticalOptions="Center" />
+							<Picker x:Name="picker" Title="Módulo" SelectedIndexChanged="Handle_SelectedIndexChanged" SelectedIndex="0" />
+						</StackLayout>
 					</StackLayout>
 				</ViewCell>
 			</TableSection>

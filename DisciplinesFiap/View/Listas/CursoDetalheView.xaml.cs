@@ -11,7 +11,7 @@ namespace DisciplinesFiap
 		private CursoService _service = CursoService.getCursoService();
 		private ObservableCollection<Modulo> _modulos { get; set; }
 
-		//private ObservableCollection<Disciplina> _disciplinas { get; set; }
+		private ObservableCollection<GroupedDisciplines> _disciplinas { get; set; }
 
 		public CursoDetalheView(int cursoId)
 		{
@@ -20,30 +20,8 @@ namespace DisciplinesFiap
 			var cursos = _service.GetCurso(cursoId);
 			_modulos = new ObservableCollection<Modulo>(cursos.Modulo);
 			//BindingContext = cursos;
-			listView.ItemsSource = GroupedDisciplines.CriarGrupo(_modulos);
-		}
-
-		void Editar_Clicked(object sender, System.EventArgs e)
-		{
-			//var cursoSelecionado = (sender as MenuItem).CommandParameter as Curso;
-
-			//var page = new EditarCursoView(cursoSelecionado);
-
-			//page.CursoEditado += (source, curso) =>
-			//{
-			//	cursoSelecionado.Id = curso.Id;
-			//	cursoSelecionado.Titulo = curso.Titulo;
-			//	cursoSelecionado.Local = curso.Local;
-			//	cursoSelecionado.Inicio = curso.Inicio;
-			//	cursoSelecionado.Duracao = curso.Duracao;
-			//	cursoSelecionado.Dias = curso.Dias;
-			//	cursoSelecionado.Horario = curso.Horario;
-			//	cursoSelecionado.Investimento = curso.Investimento;
-			//	_cursoService.EditarCurso(cursoSelecionado.Id, cursoSelecionado);
-			//};
-
-			////todo pushModal
-			//await Navigation.PushAsync(page);
+			_disciplinas = GroupedDisciplines.CriarGrupo(_modulos);
+			listView.ItemsSource = _disciplinas;
 		}
 
 		async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
@@ -52,19 +30,44 @@ namespace DisciplinesFiap
 				return;
 
 			var disciplinaSelecionada = e.SelectedItem as Disciplina;
-
 			listView.SelectedItem = null;
 
-			var page = new EditarDisciplinaView(disciplinaSelecionada);
+			var page = new EditarDisciplinaView(disciplinaSelecionada, _modulos.ToList());
 
 			page.DisciplinaEditado += (source, disciplina) =>
 			{
 				disciplinaSelecionada.Id = disciplina.Id;
 				disciplinaSelecionada.Conteudo = disciplina.Conteudo;
 				disciplinaSelecionada.Descricao = disciplina.Descricao;
+
+				//todo trocar o modulo pai na api
+				//if (((EditarDisciplinaView)source).ModuloNovo != null)
+				//{
+					
+				//}
+				//todo put na api
 			};
 
 			await Navigation.PushAsync(page);
+		}
+
+		void Deletar_Clicked(object sender, System.EventArgs e)
+		{
+			var disciplinaSelecionado = (sender as MenuItem).CommandParameter as Disciplina;
+
+			//todo pensar numa query melhor
+			//todo delete api
+			foreach (GroupedDisciplines gd in _disciplinas)
+			{
+				foreach (Disciplina d in gd)
+				{
+					if (d.Id == disciplinaSelecionado.Id)
+					{
+						gd.Remove(d);
+						return;
+					}
+				}
+			}
 		}
 	}
 }

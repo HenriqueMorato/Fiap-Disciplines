@@ -6,6 +6,7 @@ namespace DisciplinesFiap
 {
 	public class GroupedDisciplines : ObservableCollection<Disciplina>
 	{
+		public string Id { get; set; }
 		public string Descricao { get; set; }
 
 		public static ObservableCollection<GroupedDisciplines> CriarGrupo (ObservableCollection<Modulo> modulo)
@@ -14,8 +15,8 @@ namespace DisciplinesFiap
 			var colecaoGrupo = new ObservableCollection<GroupedDisciplines>();
 			foreach (Modulo m in modulo)
 			{
-				grupo = new GroupedDisciplines() { Descricao = m.Descricao };
-				foreach (Disciplina d in modulo.SelectMany(x => x.Disciplina))
+				grupo = new GroupedDisciplines() { Id = m.Id, Descricao = m.Descricao };
+				foreach (Disciplina d in m.Disciplina)
 				{
 					grupo.Add(d);
 				}
