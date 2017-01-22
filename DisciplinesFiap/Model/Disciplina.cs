@@ -18,5 +18,7 @@ namespace DisciplinesFiap
 			set { SetValue(ref _descricao, value); }
 		}
 		public string Conteudo { get; set; }
-	}
+
+        public int Modulo_Id { get; set; }
+    }
 }

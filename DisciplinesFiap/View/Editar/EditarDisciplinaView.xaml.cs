@@ -58,9 +58,8 @@ namespace DisciplinesFiap
 
 			if(String.IsNullOrWhiteSpace(disciplina.Id))
 			{
-				//todo conferir o id
-
-				DisciplinaAdicionada?.Invoke(this, disciplina);
+                disciplina.Modulo_Id = int.Parse(ModuloDisciplina.Id);
+                DisciplinaAdicionada?.Invoke(this, disciplina);
 			}
 			else
 				DisciplinaEditado?.Invoke(this, disciplina);

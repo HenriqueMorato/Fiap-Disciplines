@@ -27,5 +27,7 @@ namespace DisciplinesFiap
 			set { SetValue(ref _ordem, value); }
 		}
 		public List<Disciplina> Disciplina { get; set; }
-	}
+
+        public int Curso_Id { get; set; }
+    }
 }
