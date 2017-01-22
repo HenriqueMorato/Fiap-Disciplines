@@ -33,7 +33,7 @@ namespace DisciplinesFiap
 
 		void Busca_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
 		{
-			listView.ItemsSource = _cursoService.BuscaCursoPorNome(e.NewTextValue);
+			listView.ItemsSource = _cursoService.BuscarCursoPorNome(e.NewTextValue);
 		}
 
 		async void Curso_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
@@ -45,7 +45,7 @@ namespace DisciplinesFiap
 
 			listView.SelectedItem = null;
 
-			await Navigation.PushAsync(new CursoDetalheView(int.Parse(selecaoCurso.Id)));
+			await Navigation.PushAsync(await CursoDetalheView.Create(int.Parse(selecaoCurso.Id)));
 		}
 
 		async void AdicionarCurso_Clicked(object sender, System.EventArgs e)
@@ -58,8 +58,7 @@ namespace DisciplinesFiap
 
                 if (retorno)
                 {
-                    _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
-                    listView.ItemsSource = _cursos;
+                    await Initialize();
                 }
                 else
                 {
@@ -88,12 +87,11 @@ namespace DisciplinesFiap
                 cursoSelecionado.Horario = curso.Horario;
                 cursoSelecionado.Investimento = curso.Investimento;
 
-                var retorno = await _cursoService.EditarCurso(cursoSelecionado.Id, cursoSelecionado);
+                var retorno = await _cursoService.EditarCurso(cursoSelecionado);
 
                 if (retorno)
                 {
-                    _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
-                    listView.ItemsSource = _cursos;
+                    await Initialize();
                 }
                 else
                 {
@@ -110,7 +108,7 @@ namespace DisciplinesFiap
 		{
 			var cursoSelecionado = (sender as MenuItem).CommandParameter as Curso;
 
-			var page = new ModuloDetalheView(int.Parse(cursoSelecionado.Id));
+			var page = await ModuloDetalheView.Create(int.Parse(cursoSelecionado.Id));
 
 			await Navigation.PushAsync(page);
 		}
@@ -121,12 +119,11 @@ namespace DisciplinesFiap
 
 			if(await DisplayAlert("Alerta", $"Tem certeza que quer deletar o curso {cursoSelecionado.Titulo} ?", "Sim", "Não"))
 			{
-				var retorno = await _cursoService.RemoveCurso(cursoSelecionado);
+				var retorno = await _cursoService.RemoverCurso(cursoSelecionado);
 
                 if (retorno)
                 {
-                    _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
-                    listView.ItemsSource = _cursos;
+                    await Initialize();
                 }
                 else
                 {

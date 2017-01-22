@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace DisciplinesFiap
@@ -10,17 +11,29 @@ namespace DisciplinesFiap
 	{
 		private CursoService _service = CursoService.getCursoService();
 		private ObservableCollection<Modulo> _modulos { get; set; }
+        private int _cursoId { get; set; }
 
-		public ModuloDetalheView(int cursoId)
+        private ModuloDetalheView(int cursoId)
 		{
+            _cursoId = cursoId;
 			InitializeComponent();
-
-			var cursos = _service.GetCurso(cursoId);
-			_modulos = new ObservableCollection<Modulo>(cursos.Modulo.OrderBy(m => m.Ordem));
-			listView.ItemsSource = _modulos;
 		}
 
-		async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        public static async Task<ModuloDetalheView> Create(int cursoId)
+        {
+            var myClass = new ModuloDetalheView(cursoId);
+            await myClass.Initialize();
+            return myClass;
+        }
+
+        private async Task Initialize()
+        {
+            var curso = await _service.GetCurso(_cursoId);
+            _modulos = new ObservableCollection<Modulo>(curso.Modulo.OrderBy(m => m.Ordem));
+            listView.ItemsSource = _modulos;
+        }
+
+        async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
 		{
 			if (listView.SelectedItem == null)
 				return;
@@ -54,17 +67,22 @@ namespace DisciplinesFiap
 		{
 			var page = new EditarModuloView(new Modulo());
 
-			page.ModuloAdicionado += (source, modulo) =>
-			{
-				_modulos.Add(modulo);
+			page.ModuloAdicionado += async (source, modulo) =>
+            {
+                modulo.Curso_Id = _cursoId;
 
-				//ordenar lista
-				_modulos = new ObservableCollection<Modulo>(_modulos.OrderBy(m => m.Ordem));
-				listView.ItemsSource = null;
-				listView.ItemsSource = _modulos;
+                var retorno = await _service.AdicionarModulo(modulo);
 
-				//todo chamar api post
-			};
+                if (retorno)
+                {
+                    await Initialize();
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao incluir o Módulo!", "OK");
+                    return;
+                }
+            };
 
 			await Navigation.PushAsync(page);
 		}
@@ -73,12 +91,20 @@ namespace DisciplinesFiap
 		{
 			var moduloSelecionado = (sender as MenuItem).CommandParameter as Modulo;
 
-			if (await DisplayAlert("Alerta", $"Tem certeza que quer deletar o curso {moduloSelecionado.Descricao}", "Sim", "Não"))
+			if (await DisplayAlert("Alerta", $"Tem certeza que quer deletar o Módulo {moduloSelecionado.Descricao}", "Sim", "Não"))
 			{
-				_modulos.Remove(moduloSelecionado);
+                var retorno = await _service.RemoverModulo(moduloSelecionado);
 
-				//todo chamar api delete;
-			}
+                if (retorno)
+                {
+                    await Initialize();
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao excluir o Módulo!", "OK");
+                    return;
+                }
+            }
 		}
 	}
 }

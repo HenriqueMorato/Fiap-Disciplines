@@ -39,9 +39,6 @@ namespace DisciplinesFiap
 
 			if (String.IsNullOrWhiteSpace(modulo.Id))
 			{
-				//todo conferir o Id
-				//curso.Id = "0";
-
 				ModuloAdicionado?.Invoke(this, modulo);
 			}
 			else

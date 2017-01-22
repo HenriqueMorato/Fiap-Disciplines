@@ -12,7 +12,7 @@ namespace DisciplinesFiap
 {
 	public class CursoService
 	{
-        private const string baseAddress = "http://fiapdisciplines.azurewebsites.net/";
+        private const string baseAddress = @"http://fiapdisciplines.azurewebsites.net/";
         private static HttpClient client = new HttpClient();
         private List<Curso> _cursos;
         private string token;
@@ -34,9 +34,18 @@ namespace DisciplinesFiap
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-		public Curso GetCurso(int userId)
+        #region Curso
+        public async Task<Curso> GetCurso(int Id)
 		{
-			return _cursos.Single(c => c.Id == userId.ToString());
+            var curso = new Curso();
+
+            HttpResponseMessage response = await client.GetAsync("api/Curso/" + Id.ToString());
+            if (response.IsSuccessStatusCode)
+            {
+                curso = await response.Content.ReadAsAsync<Curso>();
+            }
+
+            return curso;
 		}
 
 		public async Task<List<Curso>> GetAllCurso()
@@ -54,7 +63,7 @@ namespace DisciplinesFiap
             return _cursos;
 		}
 
-		public List<Curso> BuscaCursoPorNome(string filtro = null)
+		public List<Curso> BuscarCursoPorNome(string filtro = null)
 		{
 			if (string.IsNullOrWhiteSpace(filtro))
 				return _cursos;
@@ -62,7 +71,7 @@ namespace DisciplinesFiap
 			return _cursos.Where(c => c.Titulo.ToLower().Contains(filtro)).ToList();
 		}
 
-		public async Task<bool> AdicionaCurso (Curso curso)
+		public async Task<bool> AdicionaCurso(Curso curso)
 		{
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -71,7 +80,7 @@ namespace DisciplinesFiap
             return response.IsSuccessStatusCode;
 		}
 
-		public async Task<bool> RemoveCurso (Curso curso)
+		public async Task<bool> RemoverCurso(Curso curso)
 		{
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -80,7 +89,7 @@ namespace DisciplinesFiap
             return response.IsSuccessStatusCode;
 		}
 
-		public async Task<bool> EditarCurso (string cursoId, Curso curso)
+		public async Task<bool> EditarCurso(Curso curso)
 		{
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -88,13 +97,60 @@ namespace DisciplinesFiap
 
             return response.IsSuccessStatusCode;
 		}
+        #endregion
+
+        #region Modulo
+        public async Task<bool> AdicionarModulo(Modulo modulo)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.PostAsync("api/Modulo", ConvertJson(modulo));
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> RemoverModulo(Modulo modulo)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.DeleteAsync("api/Modulo/" + modulo.Id.ToString());
+
+            return response.IsSuccessStatusCode;
+        }
+        #endregion
+
+        #region Disciplina
+        public async Task<bool> AdicionarDisciplina(Disciplina disciplina)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.PostAsync("api/Disciplina", ConvertJson(disciplina));
+
+            return response.IsSuccessStatusCode;
+        }
+        public async Task<bool> RemoverDisciplina(Disciplina disciplina)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.DeleteAsync("api/Disciplina/" + disciplina.Id.ToString());
+
+            return response.IsSuccessStatusCode;
+        }
+        public async Task<bool> EditarDisciplina(Disciplina disciplina)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.PutAsync("api/Disciplina/" + disciplina.Id.ToString(), ConvertJson(disciplina));
+
+            return response.IsSuccessStatusCode;
+        }
+        #endregion
 
         public async Task<bool> Autenticar(Usuario usuario)
         {
             //Não sei porque cazzo o método de extensão PostAsJsonAsync não rola com o Xamarin
             //Já tinha ocorrido esse erro em outro projeto Xamarin
             //HttpResponseMessage response = await client.PostAsJsonAsync("Autenticar", usuario);
-
             HttpResponseMessage response = await client.PostAsync("Usuario/Autenticar", ConvertJson(usuario));
 
             if (response.IsSuccessStatusCode)

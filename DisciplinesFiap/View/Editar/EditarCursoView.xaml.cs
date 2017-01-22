@@ -30,7 +30,7 @@ namespace DisciplinesFiap
 			};
 		}
 
-		async void Save_Clicked(object sender, System.EventArgs e)
+		async void Save_Clicked(object sender, EventArgs e)
 		{
 			var curso = BindingContext as Curso;
 
@@ -42,9 +42,6 @@ namespace DisciplinesFiap
 
 			if (String.IsNullOrWhiteSpace(curso.Id))
 			{
-				//todo conferir o Id
-				//curso.Id = "0";
-
 				CursoAdicionado?.Invoke(this, curso);
 			}
 			else
