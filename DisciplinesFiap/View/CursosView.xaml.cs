@@ -52,12 +52,21 @@ namespace DisciplinesFiap
 		{
 			var page = new EditarCursoView(new Curso());
 
-			page.CursoAdicionado += (source, curso) => 
-			{
-				_cursos.Add(curso);
-				//todo chamar api post
-				_cursoService.AdicionaCurso(curso);
-			};
+			page.CursoAdicionado += async (source, curso) =>
+            {
+                var retorno = await _cursoService.AdicionaCurso(curso);
+
+                if (retorno)
+                {
+                    _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
+                    listView.ItemsSource = _cursos;
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao incluir o Curso!", "OK");
+                    return;
+                }
+            };
 
 			await Navigation.PushAsync(page);
 		}
@@ -68,20 +77,30 @@ namespace DisciplinesFiap
 
 			var page = new EditarCursoView(cursoSelecionado);
 
-			page.CursoEditado += (source, curso) => 
-			{
-				cursoSelecionado.Id = curso.Id;
-				cursoSelecionado.Titulo = curso.Titulo;
-				cursoSelecionado.Local = curso.Local;
-				cursoSelecionado.Inicio = curso.Inicio;
-				cursoSelecionado.Duracao = curso.Duracao;
-				cursoSelecionado.Dias = curso.Dias;
-				cursoSelecionado.Horario = curso.Horario;
-				cursoSelecionado.Investimento = curso.Investimento;
+			page.CursoEditado += async (source, curso) =>
+            {
+                cursoSelecionado.Id = curso.Id;
+                cursoSelecionado.Titulo = curso.Titulo;
+                cursoSelecionado.Local = curso.Local;
+                cursoSelecionado.Inicio = curso.Inicio;
+                cursoSelecionado.Duracao = curso.Duracao;
+                cursoSelecionado.Dias = curso.Dias;
+                cursoSelecionado.Horario = curso.Horario;
+                cursoSelecionado.Investimento = curso.Investimento;
 
-				//todo chamar api put
-				_cursoService.EditarCurso(cursoSelecionado.Id, cursoSelecionado);
-			};
+                var retorno = await _cursoService.EditarCurso(cursoSelecionado.Id, cursoSelecionado);
+
+                if (retorno)
+                {
+                    _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
+                    listView.ItemsSource = _cursos;
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao editar o Curso!", "OK");
+                    return;
+                }
+            };
 
 
 			await Navigation.PushAsync(page);
@@ -102,11 +121,19 @@ namespace DisciplinesFiap
 
 			if(await DisplayAlert("Alerta", $"Tem certeza que quer deletar o curso {cursoSelecionado.Titulo} ?", "Sim", "Não"))
 			{
-				_cursos.Remove(cursoSelecionado);
+				var retorno = await _cursoService.RemoveCurso(cursoSelecionado);
 
-				//todo chamar api delete
-				_cursoService.RemoveCurso(cursoSelecionado);
-			}
+                if (retorno)
+                {
+                    _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
+                    listView.ItemsSource = _cursos;
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao excluir o Curso!", "OK");
+                    return;
+                }
+            }
 		}
 
 		//Desabilitar back button dispositivos android

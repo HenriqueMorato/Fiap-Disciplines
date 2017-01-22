@@ -12,6 +12,7 @@ namespace DisciplinesFiap
 {
 	public class CursoService
 	{
+        private const string baseAddress = "http://fiapdisciplines.azurewebsites.net/";
         private static HttpClient client = new HttpClient();
         private List<Curso> _cursos;
         private string token;
@@ -28,7 +29,7 @@ namespace DisciplinesFiap
         }
         private CursoService()
         {
-            client.BaseAddress = new Uri("http://fiapdisciplines.azurewebsites.net/");
+            client.BaseAddress = new Uri(baseAddress);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -41,9 +42,6 @@ namespace DisciplinesFiap
 		public async Task<List<Curso>> GetAllCurso()
 		{
             List<Curso> cursos = new List<Curso>();
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            //client.DefaultRequestHeaders.Add("Authorization", token);
 
             HttpResponseMessage response = await client.GetAsync("api/Curso");
             if (response.IsSuccessStatusCode)
@@ -58,39 +56,37 @@ namespace DisciplinesFiap
 
 		public List<Curso> BuscaCursoPorNome(string filtro = null)
 		{
-			if (String.IsNullOrWhiteSpace(filtro))
+			if (string.IsNullOrWhiteSpace(filtro))
 				return _cursos;
 
 			return _cursos.Where(c => c.Titulo.ToLower().Contains(filtro)).ToList();
 		}
 
-		public List<Disciplina> DisciplinasPorModulo(Modulo modulo)
+		public async Task<bool> AdicionaCurso (Curso curso)
 		{
-			return modulo.Disciplina;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.PostAsync("api/Curso", ConvertJson(curso));
+
+            return response.IsSuccessStatusCode;
 		}
 
-		public void AdicionaCurso (Curso curso)
+		public async Task<bool> RemoveCurso (Curso curso)
 		{
-			_cursos.Add(curso);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.DeleteAsync("api/Curso/" + curso.Id.ToString());
+
+            return response.IsSuccessStatusCode;
 		}
 
-		public void RemoveCurso (Curso curso)
+		public async Task<bool> EditarCurso (string cursoId, Curso curso)
 		{
-			_cursos.Remove(curso);
-		}
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-		public void EditarCurso (string cursoId, Curso curso)
-		{
-			Curso _curso = _cursos.Single(c => c.Id == cursoId);
+            HttpResponseMessage response = await client.PutAsync("api/Curso/" + curso.Id.ToString(), ConvertJson(curso));
 
-			//_curso.Id = curso.Id;
-			_curso.Titulo = curso.Titulo;
-			_curso.Local = curso.Local;
-			_curso.Inicio = curso.Inicio;
-			_curso.Duracao = curso.Duracao;
-			_curso.Dias = curso.Dias;
-			_curso.Horario = curso.Horario;
-			_curso.Investimento = curso.Investimento;
+            return response.IsSuccessStatusCode;
 		}
 
         public async Task<bool> Autenticar(Usuario usuario)
@@ -115,7 +111,12 @@ namespace DisciplinesFiap
 
         public static StringContent ConvertJson(object objeto)
         {
-            string json = JsonConvert.SerializeObject(objeto);
+            string json = JsonConvert.SerializeObject(objeto,
+                                                      Formatting.None,
+                                                      new JsonSerializerSettings
+                                                      {
+                                                          NullValueHandling = NullValueHandling.Ignore
+                                                      });
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             return stringContent;
         }
