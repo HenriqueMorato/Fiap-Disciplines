@@ -44,21 +44,29 @@ namespace DisciplinesFiap
 
 			var page = new EditarModuloView(moduloSelecionado);
 
-			page.ModuloEditado += (source, modulo) =>
-			{
-				moduloSelecionado.Id = modulo.Id;
-				moduloSelecionado.Descricao = modulo.Descricao;
-				moduloSelecionado.Ordem = modulo.Ordem;
-				moduloSelecionado.Carga = modulo.Carga;
-				moduloSelecionado.Disciplina = modulo.Disciplina;
+			page.ModuloEditado += async (source, modulo) =>
+            {
 
-				//ordenar lista
-				_modulos = new ObservableCollection<Modulo>(_modulos.OrderBy(m => m.Ordem));
-				listView.ItemsSource = null;
-				listView.ItemsSource = _modulos;
 
-				//todo api modulos put
-			};
+                moduloSelecionado.Id = modulo.Id;
+                moduloSelecionado.Descricao = modulo.Descricao;
+                moduloSelecionado.Ordem = modulo.Ordem;
+                moduloSelecionado.Carga = modulo.Carga;
+                moduloSelecionado.Disciplina = modulo.Disciplina;
+                moduloSelecionado.Curso_Id = _cursoId;
+
+                var retorno = await _service.EditarModulo(moduloSelecionado);
+
+                if (retorno)
+                {
+                    await Initialize();
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao editar o Módulo!", "OK");
+                    return;
+                }
+            };
 
 			await Navigation.PushAsync(page);
 		}

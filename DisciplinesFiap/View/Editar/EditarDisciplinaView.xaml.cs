@@ -28,9 +28,7 @@ namespace DisciplinesFiap
 				Descricao = disciplina.Descricao
 			};
 
-
-
-			if (!string.IsNullOrWhiteSpace(disciplina.Id))
+			if (disciplina.Id != 0)
 				return;
 
 			foreach (var m in modulos)
@@ -56,9 +54,9 @@ namespace DisciplinesFiap
 				return;
 			}
 
-			if(String.IsNullOrWhiteSpace(disciplina.Id))
+			if(disciplina.Id == 0)
 			{
-                disciplina.Modulo_Id = int.Parse(ModuloDisciplina.Id);
+                disciplina.Modulo_Id = ModuloDisciplina.Id;
                 DisciplinaAdicionada?.Invoke(this, disciplina);
 			}
 			else

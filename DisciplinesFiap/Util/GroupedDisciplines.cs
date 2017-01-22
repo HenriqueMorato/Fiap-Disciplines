@@ -7,7 +7,7 @@ namespace DisciplinesFiap
 {
 	public class GroupedDisciplines : ObservableCollection<Disciplina>
 	{
-		public string Id { get; set; }
+		public int Id { get; set; }
 		public string Descricao { get; set; }
 
 		public static ObservableCollection<GroupedDisciplines> CriarGrupo (ObservableCollection<Modulo> modulo)

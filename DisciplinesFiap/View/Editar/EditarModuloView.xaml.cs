@@ -37,10 +37,8 @@ namespace DisciplinesFiap
 				return; 
 			}
 
-			if (String.IsNullOrWhiteSpace(modulo.Id))
-			{
+			if (modulo.Id == 0)
 				ModuloAdicionado?.Invoke(this, modulo);
-			}
 			else
 				ModuloEditado?.Invoke(this, modulo);
 

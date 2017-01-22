@@ -108,12 +108,19 @@ namespace DisciplinesFiap
 
             return response.IsSuccessStatusCode;
         }
-
         public async Task<bool> RemoverModulo(Modulo modulo)
         {
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             HttpResponseMessage response = await client.DeleteAsync("api/Modulo/" + modulo.Id.ToString());
+
+            return response.IsSuccessStatusCode;
+        }
+        public async Task<bool> EditarModulo(Modulo modulo)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await client.PutAsync("api/Modulo/" + modulo.Id.ToString(), ConvertJson(modulo));
 
             return response.IsSuccessStatusCode;
         }

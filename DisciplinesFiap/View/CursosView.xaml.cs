@@ -45,7 +45,7 @@ namespace DisciplinesFiap
 
 			listView.SelectedItem = null;
 
-			await Navigation.PushAsync(await CursoDetalheView.Create(int.Parse(selecaoCurso.Id)));
+			await Navigation.PushAsync(await CursoDetalheView.Create(selecaoCurso.Id));
 		}
 
 		async void AdicionarCurso_Clicked(object sender, System.EventArgs e)
@@ -108,7 +108,7 @@ namespace DisciplinesFiap
 		{
 			var cursoSelecionado = (sender as MenuItem).CommandParameter as Curso;
 
-			var page = await ModuloDetalheView.Create(int.Parse(cursoSelecionado.Id));
+			var page = await ModuloDetalheView.Create(cursoSelecionado.Id);
 
 			await Navigation.PushAsync(page);
 		}
