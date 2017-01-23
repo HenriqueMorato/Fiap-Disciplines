@@ -63,7 +63,7 @@ namespace DisciplinesFiap
 			app.PasswordKey = usuario.Senha;
 			App.UsuarioAutenticado = true;
 
-            await Navigation.PushAsync(await CursosView.Create());
-		}
+            ((MainPageView)app.MainPage).Detail = new NavigationPage(await CursosView.Create());
+        }
 	}
 }
