@@ -43,6 +43,16 @@ namespace DisciplinesFiap
 			}
 		}
 
+		void Handle_Appearing(object sender, System.EventArgs e)
+		{
+			if (!App.UsuarioAutenticado)
+			{
+				var text = (TextCell)sender;
+
+				text.ContextActions.Clear();
+			}
+		}
+
 		async void AdicionarDisciplina_Clicked(object sender, System.EventArgs e)
 		{
 			var page = new EditarDisciplinaView(new Disciplina(), _modulos.ToList());
@@ -72,6 +82,9 @@ namespace DisciplinesFiap
 
 			var disciplinaSelecionada = e.SelectedItem as Disciplina;
 			listView.SelectedItem = null;
+
+			if (!App.UsuarioAutenticado)
+				return;
 
 			var page = new EditarDisciplinaView(disciplinaSelecionada, _modulos.ToList());
 

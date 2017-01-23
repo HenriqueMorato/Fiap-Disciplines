@@ -21,6 +21,7 @@ namespace DisciplinesFiap
         private async Task Initialize()
         {
             _cursos = new ObservableCollection<Curso>(await _cursoService.GetAllCurso());
+			BindingContext = _cursos;
             listView.ItemsSource = _cursos;
         }
 
@@ -28,7 +29,23 @@ namespace DisciplinesFiap
 		{
 			InitializeComponent();
 
+			//desabilitar itens de edição
+			if (!App.UsuarioAutenticado)
+			{
+				ToolbarItems.Clear();
+			}
+
 			NavigationPage.SetHasBackButton(this, false);		
+		}
+
+		void Handle_Appearing(object sender, System.EventArgs e)
+		{
+			if(!App.UsuarioAutenticado)
+			{
+				var text = (TextCell)sender;
+
+				text.ContextActions.Clear();	
+			}
 		}
 
 		void Busca_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
