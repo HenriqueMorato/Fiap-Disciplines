@@ -14,12 +14,15 @@ namespace DisciplinesFiap
 			menuPage.ListView.ItemSelected += ListView_ItemSelected;
 		}
 
-		private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		async private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 		{
 			var item = e.SelectedItem as OpcoesMenu;
 			if (item != null)
 			{
-				Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+				if(item.TargetType == typeof(CursosView))
+					Detail = new NavigationPage(await CursosView.Create());
+				else
+					Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 				menuPage.ListView.SelectedItem = null;
 				IsPresented = false;
 			}

@@ -25,6 +25,12 @@ namespace DisciplinesFiap
 				Icone = "favs.png",
 				TargetType = typeof(HomeView)
 			});
+			menuItems.Add(new OpcoesMenu
+			{
+				Opcao = "Disciplinas",
+				Icone = "favs.png",
+				TargetType = typeof(CursosView)
+			});
 
 			lstMenu.ItemsSource = menuItems;
 		}

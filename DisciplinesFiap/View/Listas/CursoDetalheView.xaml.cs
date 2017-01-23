@@ -35,6 +35,12 @@ namespace DisciplinesFiap
 		{
             _cursoId = cursoId;
 			InitializeComponent();
+
+			//desabilitar itens de edição
+			if (!App.UsuarioAutenticado)
+			{
+				ToolbarItems.Clear();
+			}
 		}
 
 		async void AdicionarDisciplina_Clicked(object sender, System.EventArgs e)
