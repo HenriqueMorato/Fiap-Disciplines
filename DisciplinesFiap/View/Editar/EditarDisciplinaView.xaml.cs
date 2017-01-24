@@ -9,11 +9,9 @@ namespace DisciplinesFiap
 	{
 		public event EventHandler<Disciplina> DisciplinaEditado;
 		public event EventHandler<Disciplina> DisciplinaAdicionada;
-		//todo pensar numa forma de não ter tantas variáveis
 		private List<Modulo> _modulos;
 		public Modulo ModuloDisciplina;
 
-		//todo pensar numa forma de não ter tantos args
 		public EditarDisciplinaView(Disciplina disciplina, List<Modulo> modulos)
 		{
 			if (disciplina == null)
