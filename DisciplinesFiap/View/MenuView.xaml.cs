@@ -16,19 +16,19 @@ namespace DisciplinesFiap
 			menuItems.Add(new OpcoesMenu
 			{
 				Opcao = "Login",
-				Icone = "check.png",
+				Icone = "Door_Opened.png",
 				TargetType = typeof(LoginView)
 			});
 			menuItems.Add(new OpcoesMenu
 			{
 				Opcao = "Home",
-				Icone = "favs.png",
+				Icone = "Home.png",
 				TargetType = typeof(HomeView)
 			});
 			menuItems.Add(new OpcoesMenu
 			{
 				Opcao = "Disciplinas",
-				Icone = "favs.png",
+				Icone = "Book.png",
 				TargetType = typeof(CursosView)
 			});
 

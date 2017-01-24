@@ -110,6 +110,18 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable\favs.png" />
     <AndroidResource Include="Resources\drawable\check.png" />
+    <AndroidResource Include="Resources\drawable\Door_Opened.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Door_Opened.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Door_Opened.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Door_Opened.png" />
+    <AndroidResource Include="Resources\drawable\Book.png" />
+    <AndroidResource Include="Resources\drawable\Home.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Book.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Home.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Book.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Home.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Book.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Home.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
