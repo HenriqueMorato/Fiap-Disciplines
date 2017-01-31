@@ -13,7 +13,7 @@
 			<DataTemplate>
 				<TextCell Text="{Binding Descricao}">
 					<TextCell.ContextActions>
-						<MenuItem Text="Deletar" 
+						<MenuItem Text="Excluir" 
 									IsDestructive="true"
 									Clicked="Deletar_Clicked"
 									CommandParameter="{Binding .}" />

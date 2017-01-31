@@ -12,12 +12,6 @@
 				<EntryCell Label="Local" Text="{Binding Local}" Keyboard="Default"/>
 			</TableSection>
 			<TableSection Title="Duração do Curso">
-				<!--<ViewCell>
-					<StackLayout Orientation="Horizontal" Padding="13, 0">
-						<Label Text="Data de Início" VerticalOptions="Center" />
-						<DatePicker Date="{Binding Inicio}" Format="dd MM yy" HorizontalOptions="EndAndExpand"/>
-					</StackLayout>	
-				</ViewCell>-->
 				<EntryCell Label="Data de Início" Text="{Binding Inicio}" Keyboard="Text" />
 				<EntryCell Label="Duração em Dias" Text="{Binding Duracao}" Keyboard="Numeric" />
 				<EntryCell Label="Dias da semana" Text="{Binding Dias}" Keyboard="Text" />
@@ -28,7 +22,7 @@
 			</TableSection>
 			<TableSection>
 				<ViewCell>
-					<Button Text="Save" Clicked="Save_Clicked" />
+					<Button Text="Salvar" Clicked="Save_Clicked" />
 				</ViewCell>
 			</TableSection>
 		</TableRoot>

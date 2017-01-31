@@ -28,6 +28,8 @@ namespace DisciplinesFiap
 				Horario = curso.Horario,
 				Investimento = curso.Investimento
 			};
+
+            Title = curso.Titulo;
 		}
 
 		async void Save_Clicked(object sender, EventArgs e)

@@ -25,6 +25,8 @@ namespace DisciplinesFiap
 				Carga = modulo.Carga,
 				Disciplina = modulo.Disciplina
 			};
+
+            Title = modulo.Descricao;
 		}
 
 		async void Save_Clicked(object sender, System.EventArgs e)

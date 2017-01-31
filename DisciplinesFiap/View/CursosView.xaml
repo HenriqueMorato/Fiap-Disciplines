@@ -23,7 +23,7 @@
 									IsDestructive="false" 
 									Clicked="EditarModulo_Clicked"
 									CommandParameter="{Binding .}"/>
-							<MenuItem Text="Deletar" 
+							<MenuItem Text="Excluir" 
 									IsDestructive="true"
 									Clicked="Deletar_Clicked"
 									CommandParameter="{Binding .}" />

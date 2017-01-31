@@ -27,7 +27,7 @@ namespace DisciplinesFiap
 			});
 			menuItems.Add(new OpcoesMenu
 			{
-				Opcao = "Disciplinas",
+				Opcao = "Cursos",
 				Icone = "Book.png",
 				TargetType = typeof(CursosView)
 			});

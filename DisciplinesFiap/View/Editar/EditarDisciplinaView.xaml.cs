@@ -44,12 +44,9 @@ namespace DisciplinesFiap
             {
                 picker.SelectedIndex = 0;
                 ModuloDisciplina = modulos[0];
-            }                                          
+            }
 
-			label.IsEnabled = true;
-			label.Opacity = 100;
-			picker.IsEnabled = true;
-			picker.Opacity = 100;
+            Title = disciplina.Descricao;
 		}
 
 		async void Save_Clicked(object sender, System.EventArgs e)

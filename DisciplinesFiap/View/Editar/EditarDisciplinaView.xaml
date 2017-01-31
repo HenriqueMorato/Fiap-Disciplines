@@ -14,8 +14,8 @@
 						<Label Text="Conteúdo" VerticalOptions="Center" />
 						<Editor Text="{Binding Conteudo}" Keyboard="Default" HeightRequest="200" />
 						<StackLayout Orientation="Horizontal" Padding="13, 0" IsEnabled="false">
-							<Label Text="Módulo" VerticalOptions="Center" x:Name="label" IsEnabled="false"  Opacity="0"/>
-							<Picker x:Name="picker" Title="Módulo" SelectedIndexChanged="Handle_SelectedIndexChanged" IsEnabled="false"  Opacity="0" />
+							<Label Text="Módulo" VerticalOptions="Center" x:Name="label"/>
+							<Picker x:Name="picker" Title="Módulo" SelectedIndexChanged="Handle_SelectedIndexChanged" />
 						</StackLayout>
 					</StackLayout>
 				</ViewCell>
@@ -24,7 +24,7 @@
 			<TableSection>
 				<ViewCell>
 					<StackLayout VerticalOptions="End">
-						<Button Text="Save" Clicked="Save_Clicked" />
+						<Button Text="Salvar" Clicked="Save_Clicked" />
 					</StackLayout>
 				</ViewCell>
 			</TableSection>

@@ -134,7 +134,7 @@ namespace DisciplinesFiap
 		{
 			var cursoSelecionado = (sender as MenuItem).CommandParameter as Curso;
 
-			if(await DisplayAlert("Alerta", $"Tem certeza que quer deletar o curso {cursoSelecionado.Titulo} ?", "Sim", "Não"))
+			if(await DisplayAlert("Alerta", $"Tem certeza que quer excluir o curso {cursoSelecionado.Titulo} ?", "Sim", "Não"))
 			{
 				var retorno = await _cursoService.RemoverCurso(cursoSelecionado);
 

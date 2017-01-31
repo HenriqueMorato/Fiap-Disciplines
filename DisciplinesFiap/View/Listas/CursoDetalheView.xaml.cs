@@ -25,10 +25,12 @@ namespace DisciplinesFiap
         private async Task Initialize()
         {
 
-            var cursos = await _service.GetCurso(_cursoId);
-            _modulos = new ObservableCollection<Modulo>(cursos.Modulo);
+            var curso = await _service.GetCurso(_cursoId);
+            _modulos = new ObservableCollection<Modulo>(curso.Modulo);
             _disciplinas = GroupedDisciplines.CriarGrupo(_modulos);
             listView.ItemsSource = _disciplinas;
+
+            Title = curso.Titulo;
         }
 
         private CursoDetalheView(int cursoId)
@@ -55,6 +57,12 @@ namespace DisciplinesFiap
 
 		async void AdicionarDisciplina_Clicked(object sender, System.EventArgs e)
 		{
+            if (_modulos == null || _modulos.Count == 0)
+            {
+                await DisplayAlert("Erro", "Você primeiro deve criar um módulo para o curso!", "OK");
+                return;
+            }
+
 			var page = new EditarDisciplinaView(new Disciplina(), _modulos.ToList());
 
 			page.DisciplinaAdicionada += async (source, disciplina) =>
@@ -116,7 +124,7 @@ namespace DisciplinesFiap
 		{
 			var disciplinaSelecionado = (sender as MenuItem).CommandParameter as Disciplina;
 
-            if (await DisplayAlert("Alerta", $"Tem certeza que quer deletar a Disciplina {disciplinaSelecionado.Descricao}", "Sim", "Não"))
+            if (await DisplayAlert("Alerta", $"Tem certeza que quer excluir a Disciplina {disciplinaSelecionado.Descricao}", "Sim", "Não"))
             {
                 var retorno = await _service.RemoverDisciplina(disciplinaSelecionado);
 

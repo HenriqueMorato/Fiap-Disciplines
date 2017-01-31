@@ -5,6 +5,13 @@
 		x:Class="DisciplinesFiap.HomeView"
 		Title="Home">
 
-	<Label Text="Home" Font="15" VerticalOptions="Center" HorizontalOptions="Center" />
-	
+  <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand">
+    <ListView x:Name="lstMenu" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemSelected="ListView_ItemSelected">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ImageCell Text="{Binding Opcao}" ImageSource="{Binding Icone}" />
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
 </ContentPage>

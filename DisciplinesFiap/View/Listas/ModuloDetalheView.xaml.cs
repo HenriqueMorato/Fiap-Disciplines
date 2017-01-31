@@ -31,6 +31,8 @@ namespace DisciplinesFiap
             var curso = await _service.GetCurso(_cursoId);
             _modulos = new ObservableCollection<Modulo>(curso.Modulo.OrderBy(m => m.Ordem));
             listView.ItemsSource = _modulos;
+
+            Title = curso.Titulo;
         }
 
         async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
@@ -99,7 +101,7 @@ namespace DisciplinesFiap
 		{
 			var moduloSelecionado = (sender as MenuItem).CommandParameter as Modulo;
 
-			if (await DisplayAlert("Alerta", $"Tem certeza que quer deletar o Módulo {moduloSelecionado.Descricao}", "Sim", "Não"))
+			if (await DisplayAlert("Alerta", $"Tem certeza que quer excluir o Módulo {moduloSelecionado.Descricao}", "Sim", "Não"))
 			{
                 var retorno = await _service.RemoverModulo(moduloSelecionado);
 
