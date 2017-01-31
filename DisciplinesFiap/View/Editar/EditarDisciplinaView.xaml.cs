@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Xamarin.Forms;
 
 namespace DisciplinesFiap
@@ -67,13 +69,24 @@ namespace DisciplinesFiap
 
             disciplina.Modulo_Id = ModuloDisciplina.Id;
 
-            if (disciplina.Id == 0)
-			{
-                disciplina.Modulo_Id = ModuloDisciplina.Id;
-                DisciplinaAdicionada?.Invoke(this, disciplina);
-			}
-			else
-				DisciplinaEditado?.Invoke(this, disciplina);
+            var cancelSrc = new CancellationTokenSource();
+            var config = new ProgressDialogConfig()
+                .SetTitle("Loading")
+                .SetIsDeterministic(false)
+                .SetMaskType(MaskType.Black)
+                .SetCancel(onCancel: cancelSrc.Cancel);
+
+            using (UserDialogs.Instance.Progress(config))
+            {
+
+                if (disciplina.Id == 0)
+                {
+                    disciplina.Modulo_Id = ModuloDisciplina.Id;
+                    DisciplinaAdicionada?.Invoke(this, disciplina);
+                }
+                else
+                    DisciplinaEditado?.Invoke(this, disciplina);
+            }
 
 			await Navigation.PopAsync();
 		}

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using System;
 using System.Collections.Generic;
-
+using System.Threading;
 using Xamarin.Forms;
 
 namespace DisciplinesFiap
@@ -42,12 +43,24 @@ namespace DisciplinesFiap
 				return;
 			}
 
-			if (curso.Id == 0)
-			{
-				CursoAdicionado?.Invoke(this, curso);
-			}
-			else
-				CursoEditado?.Invoke(this, curso);
+            var cancelSrc = new CancellationTokenSource();
+            var config = new ProgressDialogConfig()
+                .SetTitle("Loading")
+                .SetIsDeterministic(false)
+                .SetMaskType(MaskType.Black)
+                .SetCancel(onCancel: cancelSrc.Cancel);
+
+            using (UserDialogs.Instance.Progress(config))
+            {
+
+                if (curso.Id == 0)
+                {
+                    CursoAdicionado?.Invoke(this, curso);
+                }
+                else
+                    CursoEditado?.Invoke(this, curso);
+
+            }
 
 			await Navigation.PopAsync();
 		}
