@@ -93,7 +93,7 @@ namespace DisciplinesFiap
                 disciplinaSelecionada.Id = disciplina.Id;
                 disciplinaSelecionada.Conteudo = disciplina.Conteudo;
                 disciplinaSelecionada.Descricao = disciplina.Descricao;
-                //todo poder trocar o módulo da disciplina
+                disciplinaSelecionada.Modulo_Id = disciplina.Modulo_Id;
 
                 var retorno = await _service.EditarDisciplina(disciplinaSelecionada);
 

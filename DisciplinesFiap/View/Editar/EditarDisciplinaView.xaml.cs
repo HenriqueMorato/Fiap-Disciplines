@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using Xamarin.Forms;
 
 namespace DisciplinesFiap
@@ -14,7 +14,9 @@ namespace DisciplinesFiap
 
 		public EditarDisciplinaView(Disciplina disciplina, List<Modulo> modulos)
 		{
-			if (disciplina == null)
+            _modulos = modulos;
+
+            if (disciplina == null)
 				throw new ArgumentNullException(nameof(disciplina));
 
 			InitializeComponent();
@@ -26,20 +28,28 @@ namespace DisciplinesFiap
 				Descricao = disciplina.Descricao
 			};
 
-			if (disciplina.Id != 0)
-				return;
 
 			foreach (var m in modulos)
-				picker.Items.Add(m.Descricao);
+				picker.Items.Add(m.Id + "|" + m.Descricao);
 
-			picker.SelectedIndex = 0;
+            if (disciplina.Id != 0)
+            {
+                var moduloaux = modulos.First(m => m.Id == disciplina.Modulo_Id);
+                var moduloauxindice = modulos.IndexOf(moduloaux);
+
+                picker.SelectedIndex = moduloauxindice;
+                ModuloDisciplina = moduloaux;
+            }
+            else
+            {
+                picker.SelectedIndex = 0;
+                ModuloDisciplina = modulos[0];
+            }                                          
 
 			label.IsEnabled = true;
 			label.Opacity = 100;
 			picker.IsEnabled = true;
 			picker.Opacity = 100;
-			_modulos = modulos;
-			ModuloDisciplina = _modulos[0];
 		}
 
 		async void Save_Clicked(object sender, System.EventArgs e)
@@ -52,7 +62,15 @@ namespace DisciplinesFiap
 				return;
 			}
 
-			if(disciplina.Id == 0)
+            if (ModuloDisciplina == null)
+            {
+                await DisplayAlert("Erro", "Por favor, selecione o módulo.", "OK");
+                return;
+            }
+
+            disciplina.Modulo_Id = ModuloDisciplina.Id;
+
+            if (disciplina.Id == 0)
 			{
                 disciplina.Modulo_Id = ModuloDisciplina.Id;
                 DisciplinaAdicionada?.Invoke(this, disciplina);
@@ -65,8 +83,20 @@ namespace DisciplinesFiap
 
 		void Handle_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if(ModuloDisciplina != null)
-				ModuloDisciplina = _modulos[picker.SelectedIndex];
+            if (picker.SelectedIndex != -1)
+            {
+                string moduloString = picker.Items[picker.SelectedIndex];
+                string[] conteudo = moduloString.Split('|');
+
+                var modulo = _modulos.First(m => m.Id == int.Parse(conteudo[0]));
+
+                ModuloDisciplina = modulo;
+            }
+            else
+            {
+                ModuloDisciplina = null;
+            }
+
 		}
 	}
 }
